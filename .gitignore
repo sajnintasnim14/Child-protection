@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+/Output/sampling/*
+
+/04 Data/01_adolescent/01_data_collection/*
+/04 Data/02_caregiver/01_data_collection/*
+
+/Inputs/sampling/*
+
+/Inputs/adolescent/01_audit/*
+/Inputs/caregiver/01_audit/*
