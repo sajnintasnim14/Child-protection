@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 
-/Output/sampling/*
+/Output/*
 
 /04 Data/01_adolescent/01_data_collection/*
 /04 Data/02_caregiver/01_data_collection/*
