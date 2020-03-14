@@ -1,4 +1,4 @@
-
+# rm(list=ls())
 # Library -----------------------------------------------------------------
 
 library(dplyr)
@@ -155,15 +155,8 @@ final_combind <- final_data_v2 %>% left_join( hh_to_indv,by = c("X_uuid"))
 
 
 if (write == "yes"){
-  if (population == "caregiver" ){
-    write.csv(final_data_v2,"Output/caregiver_recoding_HH.csv")
-    write.csv(hh_to_indv,"Output/caregiver_recoding_HH_INDV.csv")
-    write.csv(final_combind,"Output/caregiver_recoding_final_combind.csv")
+    write.csv(final_data_v2,paste0("Output/",population,"_recoding_HH.csv"))
+    write.csv(hh_to_indv,paste0("Output/",population,"_recoding_HH_INDV.csv"))
+    write.csv(final_combind,paste0("Output/",population,"_recoding_final_combind.csv"))
   }
   
-  if (population == "adolescent" ){
-    write.csv(final_data_v2,"Output/adolescent_recoding_HH.csv")
-    write.csv(hh_to_indv,"Output/adolescent_recoding_HH_INDV.csv")
-    write.csv(final_combind,"Output/adolescent_recoding_final_combind.csv")
-  }
-}
