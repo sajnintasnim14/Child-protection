@@ -1,4 +1,4 @@
-# rm(list=ls())
+rm(list=ls())
 # Library -----------------------------------------------------------------
 
 library(dplyr)
@@ -10,7 +10,7 @@ library(readr)
 library(plotKML)
 library(stringr)
 
-population <-c("adolescent","caregiver")[1]
+population <-c("adolescent","caregiver")[2]
 write <-c("yes","no")[1]
 
 # data --------------------------------------------------------------------
@@ -84,11 +84,8 @@ final_data_hh <- hh %>% mutate(
   i.threats_harmful_practice = if_else(threats_4 == "yes" | threats_5 == "yes","yes","no",NULL),
   i.threats_accidental = if_else(threats_10 == "yes" | threats_11 == "yes"| threats_12 == "yes" ,"yes","no",NULL),
   
-  threat_safety_na = rowSums(is.na(hh[threats_safety_colnames])),
-  threat_safety_sum = rowSums(hh[threats_safety_colnames] == "yes",na.rm = T),
-  threats_safety_t = if_else( threat_safety_na > 0,"",
-                              if_else(threat_safety_sum > 0,"yes","no",NULL)),
-  i.threats_safety = if_else(threats_safety_t != "", threats_safety_t,NULL,NULL)
+  threat_safety_sum = rowSums(hh[threats_safety_colnames] == "yes"),
+  i.threats_safety = if_else( threat_safety_sum > 0 ,"yes","no")
   
 )
 
@@ -97,7 +94,7 @@ if(population == "adolescent") {
     i.hh_no_formal_edu = if_else(edu_hoh == "none","yes","no",NULL),
     i.hh_some_primary = if_else(edu_hoh %in% some_primary,"yes","no",NULL),
     i.hh_primary_higher = if_else(edu_hoh %in% primary_higher,"yes","no",NULL),
-    hh_chores_daily_life_rowsum = rowSums(hh[adol_hh_chores_daily_life] == "yes"), ##naaaa
+    hh_chores_daily_life_rowsum = rowSums(hh[adol_hh_chores_daily_life] == "yes"), ##naaaa.rm == T not true thaT means NA is will be NA
     i.adol_hh_chores_daily_life = if_else(hh_chores_daily_life_rowsum >0 ,"yes","no",NULL),
     adol_attend_centre_learning_daily_life_rowsum = rowSums(hh[adol_attend_centre_learning_daily_life] == "yes"),
     i.adol_attend_centre_learning_daily_life = if_else(adol_attend_centre_learning_daily_life_rowsum >0 ,"yes","no",NULL),
@@ -141,7 +138,7 @@ if(population == "caregiver") {
 join_data <- hh %>% left_join(indv,by = c("X_uuid"="X_submission__uuid"))
 
 hh_to_indv <- join_data %>% group_by(X_uuid) %>% summarise(
-  i.hh_baby = if_else(any(ind_age >1 ),"yes","no",NULL),
+  i.hh_baby = if_else(any(ind_age < 3 ),"yes","no",NULL),
   i.hh_child = if_else(any(ind_age %in% 3:5),"yes","no",NULL),
   i.hh_adol = if_else(any(ind_age %in% 6:12),"yes","no",NULL),
   i.hh_older_adol = if_else(any(ind_age %in% 13:17),"yes","no",NULL)
